@@ -21,7 +21,6 @@ Answer *get_indices_of_item_weights(int *weights, int length, int limit) // O(2*
     // Go through weights and check if there is a matching weight that sums up to limit (O(n))
     for (int i = 0; i < length; i++) {
         int weight = weights[i];
-        int currWeightIndex = hash_table_retrieve(ht, weights[i]);
         int *matchingWeightIndex = hash_table_retrieve(ht, limit-weight);
         
         // If a matching weight exists in the hash table then return it
