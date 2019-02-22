@@ -26,13 +26,13 @@ Answer *get_indices_of_item_weights(int *weights, int length, int limit) // O(2*
         
         // If a matching weight exists in the hash table then return it
         if (matchingWeightIndex != -1) {
-            if (currWeightIndex > matchingWeightIndex) {
-                answer->index_1 = currWeightIndex;
+            if (i > matchingWeightIndex) {
+                answer->index_1 = i;
                 answer->index_2 = matchingWeightIndex;
                 return answer;
             } else {
                 answer->index_1 = matchingWeightIndex;
-                answer->index_2 = currWeightIndex;
+                answer->index_2 = i;
                 return answer;
             }
         }
