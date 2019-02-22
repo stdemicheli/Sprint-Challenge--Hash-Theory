@@ -3,13 +3,43 @@
 #include "hashtable.h"
 #include "ex1.h"
 
-Answer *get_indices_of_item_weights(int *weights, int length, int limit)
+Answer *get_indices_of_item_weights(int *weights, int length, int limit) // O(2*n) -> O(n)
 {
-  HashTable *ht = create_hash_table(16);
-
-  // YOUR CODE HERE
-
-  return NULL;
+    HashTable *ht = create_hash_table(16);
+    
+    Answer *answer = malloc(sizeof(Answer));
+    
+    
+    printf("****** limit: %d\n", limit);
+    
+    // Insert all weights into a hash table (O(n))
+    for (int i = 0; i < length; i++) {
+        hash_table_insert(ht, weights[i], i);
+        printf("insert key: %d, value: %d\n", weights[i], i);
+    }
+    
+    // Go through weights and check if there is a matching weight that sums up to limit (O(n))
+    for (int i = 0; i < length; i++) {
+        int weight = weights[i];
+        int currWeightIndex = hash_table_retrieve(ht, weights[i]);
+        int *matchingWeightIndex = hash_table_retrieve(ht, limit-weight);
+        
+        // If a matching weight exists in the hash table then return it
+        if (matchingWeightIndex != -1) {
+            if (currWeightIndex > matchingWeightIndex) {
+                answer->index_1 = currWeightIndex;
+                answer->index_2 = matchingWeightIndex;
+                return answer;
+            } else {
+                answer->index_1 = matchingWeightIndex;
+                answer->index_2 = currWeightIndex;
+                return answer;
+            }
+        }
+        
+    }
+    
+    return NULL;
 }
 
 void print_answer(Answer *answer)
